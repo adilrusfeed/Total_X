@@ -84,6 +84,7 @@ class OtpScreen extends StatelessWidget {
     final authProvider = Provider.of<LoginProviders>(context, listen: false);
     authProvider.verifyOtp(
         otp: userOtp,
+        
         verificationId: verificationId,
         onSuccess: () {
           Navigator.push(
