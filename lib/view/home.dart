@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx/controller/user_controller.dart';
 import 'package:totalx/service/auth_service.dart';
+import 'package:totalx/widgets/delete_widget.dart';
 import 'package:totalx/widgets/floating_action_button.dart';
 import 'package:totalx/widgets/search_filter.dart';
 
@@ -117,24 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Delete User'),
-                            content: const Text('Are you sure you want to delete this user?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  Navigator.pop(context);
-                                  await homeController.deleteUser(user.id!); // Make sure 'id' is available in the model
-                                },
-                                child: const Text('Delete'),
-                              ),
-                            ],
+                          return DeleteWidget(user: user,
+
                           );
                         },
                       );
@@ -180,3 +165,5 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 }
+
+

@@ -23,7 +23,7 @@ class AddDialogueBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        "Add User's",
+        "Add User",
       ),
       actions: [
         Center(
@@ -89,6 +89,8 @@ class AddDialogueBox extends StatelessWidget {
         CustomTextField(nameController: nameController, hintText: 'Name'),
         const SizedBox(height: 10),
         CustomTextField(nameController: ageController, hintText: 'Age'),
+        const SizedBox(height: 10),
+        CustomTextField(nameController: phoneController, hintText: 'Phone'),
         const SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
