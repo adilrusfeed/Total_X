@@ -34,8 +34,9 @@ class FloatingActoionWidget extends StatelessWidget {
           },
         );
       },
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       shape: const CircleBorder(),
+     
       child: const Icon(Icons.add, color: Colors.white),
     );
   }

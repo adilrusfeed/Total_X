@@ -45,20 +45,20 @@ class OtpScreen extends StatelessWidget {
                     height: 20,
                   ),
                   const Text(
-                      'Enter the verification code we just sent to your number +91 *******21.'),
+                      'Enter the verification code we just sent to your number +91 *********.'),
                   const SizedBox(
                     height: 10,
                   ),
                   Center(
                     child: PinCodeTextField(
                       controller: otpController,
-                      pinTextStyle:
-                          const TextStyle(fontSize: 17, color: Colors.red),
+                      pinTextStyle: const TextStyle(
+                          fontSize: 17, color: Color.fromARGB(255, 81, 68, 67)),
                       maxLength: 6,
                       pinBoxWidth: screensize.width * 0.13,
                       pinBoxHeight: screensize.height * 0.08,
                       pinBoxRadius: 10,
-                      highlightColor: Colors.red,
+                      highlightColor: const Color.fromARGB(255, 86, 54, 244),
                       defaultBorderColor: Colors.grey,
                       onDone: (value) {},
                     ),

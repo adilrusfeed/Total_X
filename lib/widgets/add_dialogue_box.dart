@@ -22,114 +22,161 @@ class AddDialogueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        "Add User",
-      ),
-      actions: [
-        Center(
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: homeProvider.selectedImage != null
-                    ? FileImage(File(homeProvider.selectedImage?.path ?? ''))
-                    : const AssetImage('assets/download.png') as ImageProvider,
-              ),
-              InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Select Image'),
-                        actions: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  homeProvider.pickImage(ImageSource.camera);
-                                },
-                                child: const Icon(Icons.camera_alt_outlined),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  homeProvider.pickImage(ImageSource.gallery);
-                                },
-                                child: const Icon(Icons.image_outlined),
-                              ),
+      elevation: 5,
+      shadowColor: Colors.red,
+      title: const Text("Add User"),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: homeProvider.selectedImage != null
+                        ? FileImage(
+                            File(homeProvider.selectedImage?.path ?? ''))
+                        : const AssetImage('assets/download.png')
+                            as ImageProvider,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.black,
+                            title: const Text(
+                              'Select Image!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: InkWell(
+                                      onTap: () {
+                                        homeProvider
+                                            .pickImage(ImageSource.camera);
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Icon(
+                                        Icons.camera_alt_outlined,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                    ),
+                                  ),
+                                  CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: InkWell(
+                                      onTap: () {
+                                        homeProvider
+                                            .pickImage(ImageSource.gallery);
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Icon(
+                                        Icons.image_outlined,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          );
+                        },
                       );
                     },
-                  );
-                },
-                child: Container(
-                  height: 35,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.4),
-                      borderRadius: const BorderRadius.only(
+                    child: Container(
+                      height: 35,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.4),
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(200),
-                          bottomRight: Radius.circular(200))),
-                  child: const Center(
-                    child: Icon(
-                      Icons.camera_alt_outlined,
-                      color: Colors.white,
+                          bottomRight: Radius.circular(200),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        CustomTextField(nameController: nameController, hintText: 'Name'),
-        const SizedBox(height: 10),
-        CustomTextField(nameController: ageController, hintText: 'Age'),
-        const SizedBox(height: 10),
-        CustomTextField(nameController: phoneController, hintText: 'Phone'),
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Cancel',
+                ],
               ),
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                      const Color.fromARGB(255, 243, 33, 33))),
-              onPressed: () {
-                if (homeProvider.selectedImage == null) {
-                  return;
-                } else {
-                  homeProvider.addUsersCollection(
-                    name: nameController.text,
-                    age: ageController.text,
-                    phoneNumber: phoneController.text,
-                    imageFile: homeProvider.selectedImage!,
-                  );
-                  nameController.clear();
-                  ageController.clear();
-                  phoneController.clear();
-                  homeProvider.selectedImage == null;
-                }
-
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Save',
-              ),
-            ),
+            const SizedBox(height: 20),
+            CustomTextField(nameController: nameController, hintText: 'Name'),
+            const SizedBox(height: 10),
+            CustomTextField(nameController: ageController, hintText: 'Age'),
+            const SizedBox(height: 10),
+            CustomTextField(nameController: phoneController, hintText: 'Phone'),
           ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.green),
+          ),
+          onPressed: () {
+            // Check if all fields are filled
+            if (nameController.text.isEmpty ||
+                ageController.text.isEmpty ||
+                phoneController.text.isEmpty ||
+                homeProvider.selectedImage == null) {
+              // Show an alert dialog if any field is missing
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Error"),
+                  content: const Text(
+                      "All fields including the image must be filled!"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
+                ),
+              );
+              return;
+            }
+
+            // Save user data
+            homeProvider.addUsersCollection(
+              name: nameController.text,
+              age: ageController.text,
+              phoneNumber: phoneController.text,
+              imageFile: homeProvider.selectedImage!,
+            );
+
+            // Clear fields
+            nameController.clear();
+            ageController.clear();
+            phoneController.clear();
+            homeProvider.selectedImage = null;
+
+            // Close the dialog
+            Navigator.pop(context);
+          },
+          child: const Text('Save'),
         ),
       ],
     );

@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: screensize.width * 0.33,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("assets/otp.avif"))),
+                              image: AssetImage("assets/otp.jpg"))),
                     ),
                     const Align(
                       alignment: Alignment.centerLeft,
