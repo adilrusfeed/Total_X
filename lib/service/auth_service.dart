@@ -58,9 +58,10 @@ class AuthService {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     try {
       await authentication.signOut();
+      Navigator.of(context).pushReplacementNamed('/login');
     } catch (e) {
       throw Exception('sign out is error$e');
     }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx/controller/user_controller.dart';
-import 'package:totalx/service/auth_service.dart';
 import 'package:totalx/widgets/delete_widget.dart';
 import 'package:totalx/widgets/floating_action_button.dart';
 import 'package:totalx/widgets/search_filter.dart';
+import 'package:totalx/widgets/sign_out.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: InkWell(
-                onTap: () => AuthService().signOut(),
+                onTap: () {
+                  signOutDialog(context);
+                },
                 child: const Icon(Icons.logout, color: Colors.white)),
           )
         ],
@@ -113,17 +115,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               title: Text(user.name ?? ''),
                               subtitle: Text(
-                                  '${user.age ?? ''},${user.phoneNumber ?? ''}'),
-                                  trailing: IconButton(onPressed: (){
+                                  '${user.age ?? ''},\n${user.phoneNumber ?? ''}'),
+                              trailing: IconButton(
+                                  onPressed: () {
                                     showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DeleteWidget(user: user,
-
-                          );
-                        },
-                      );
-                                  }, icon: Icon(Icons.delete_outline_rounded,color: Colors.red,)),
+                                      context: context,
+                                      builder: (context) {
+                                        return DeleteWidget(
+                                          user: user,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.delete_outline_rounded,
+                                    color: Colors.red,
+                                  )),
                             ),
                           );
                         },
@@ -165,5 +172,3 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 }
-
-
