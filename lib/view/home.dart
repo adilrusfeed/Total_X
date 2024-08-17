@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
   }
 
   @override
@@ -31,17 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'Cochi',
+          'Nilambur',
         ),
         leading: const Icon(
           Icons.location_on,
           color: Colors.white,
         ),
+        // ignore: prefer_const_literals_to_create_immutables
         actions: [
            Padding(
             padding: const EdgeInsets.only(right: 10),
             child: InkWell(
-             
+              onTap: () => AuthService().signOut(),
               child: const Icon(Icons.logout, color: Colors.white)),
           )
         ],
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, homeController, child) {
                   return RefreshIndicator(
                     onRefresh: () {
-                     
+                      return homeController.refreshUsers();
                     },
                     child: NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification notification) {
@@ -78,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             notification.metrics.extentAfter == 0 &&
                             !homeController.isLoading &&
                             homeController.hasMore) {
-                          
+                          _loadMoreData();
                         }
                         return false;
                       },
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: homeController.filteredUsers.length +
                             (isLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
-                          if () {
+                          if (index == homeController.filteredUsers.length) {
                             return const Center(
                               child: Padding(
                                 padding: EdgeInsets.all(16.0),
@@ -125,14 +127,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _scrollListener() {
-   
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _loadMoreData();
+    }
   }
 
   Future<void> _loadMoreData() async {
-   
+    final homeController = Provider.of<DataController>(context, listen: false);
+    if (!homeController.isLoadingMore && homeController.hasMore) {
+      await homeController.loadMore();
+    }
   }
 
-
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
 
 

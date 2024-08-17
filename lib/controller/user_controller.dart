@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:totalx/model/user_model.dart';
-import 'package:totalx/service/user_service.dart';
+import 'package:totalx/service/app_service.dart';
 
 class DataController extends ChangeNotifier {
   final imagePicker = ImagePicker();

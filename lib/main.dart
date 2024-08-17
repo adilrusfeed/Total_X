@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx/controller/auth_controller.dart';
+import 'package:totalx/controller/user_controller.dart';
 import 'package:totalx/firebase_options.dart';
 
 import 'package:totalx/widgets/auth_gate.dart';
@@ -22,13 +23,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => LoginProviders(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DataController(),
         )
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
-            
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
