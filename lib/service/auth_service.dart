@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:totalx/model/auth_model.dart';
 import 'package:totalx/view/auth/otp.dart';
 
-
 class AuthService {
   FirebaseAuth authentication = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -16,9 +15,12 @@ class AuthService {
         phoneNumber: phoneNumber,
         verificationCompleted: (phoneAuthCredential) async {
           await authentication.signInWithCredential(phoneAuthCredential);
+          print("Phone number verified and signed in :$phoneAuthCredential");
         },
         verificationFailed: (firebaseAuthException) {
           print('Error: ${firebaseAuthException.message}');
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Verification failed. Please try again.")));
         },
         codeSent: (verificationId, forceResendingToken) {
           Navigator.of(context).push(MaterialPageRoute(

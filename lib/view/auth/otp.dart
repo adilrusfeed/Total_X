@@ -70,6 +70,20 @@ class OtpScreen extends StatelessWidget {
                     onTap: () {
                       verifyOtp(context, otpController.text, phoneNumber);
                     },
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: const Center(
+                        child: Text(
+                          "Verify OTP",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -84,7 +98,6 @@ class OtpScreen extends StatelessWidget {
     final authProvider = Provider.of<LoginProviders>(context, listen: false);
     authProvider.verifyOtp(
         otp: userOtp,
-        
         verificationId: verificationId,
         onSuccess: () {
           Navigator.push(

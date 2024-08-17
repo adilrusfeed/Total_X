@@ -63,10 +63,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        value.signinWithPhone(
-                            phoneNumber: "+91${phoneFieldController.text}",
-                            context: context);
+                        if (phoneFieldController.text.isEmpty) {
+                          value.signinWithPhone(
+                              phoneNumber: "+91${phoneFieldController.text}",
+                              context: context);
+                        }else{
+                           ScaffoldMessenger.of(context).showSnackBar(
+       const SnackBar(content: Text("Please enter a valid phone number"))
+      );
+                        }
                       },
+                      
                       child: Container(
                         height: 60,
                         width: double.infinity,
