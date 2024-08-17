@@ -13,7 +13,7 @@ class LoginProviders extends ChangeNotifier {
       await authService.signinWithPhone(
           phoneNumber: phoneNumber, context: context);
     } catch (e) {
-      throw Exception("phone auth intrepted$e");
+      throw Exception("phone auth failed$e");
     }
     notifyListeners();
   }
@@ -30,7 +30,7 @@ class LoginProviders extends ChangeNotifier {
           phone: phone,
           onSuccess: onSuccess);
     } catch (e) {
-      throw Exception("otp verification intrepted$e");
+      throw Exception("otp verification failed$e");
     }
     notifyListeners();
   }

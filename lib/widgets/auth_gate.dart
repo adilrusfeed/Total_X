@@ -15,7 +15,7 @@ class AuthGate extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else if (snapshot.hasData && snapshot.data != null) {
-            return const HomeSceen();
+            return const HomeScreen();
           } else {
             return const LoginScreen();
           }

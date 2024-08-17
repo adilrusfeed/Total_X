@@ -103,7 +103,7 @@ class OtpScreen extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeSceen(),
+                builder: (context) => HomeScreen(),
               ));
         },
         phone: phonenumber);

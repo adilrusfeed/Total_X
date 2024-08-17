@@ -33,7 +33,7 @@ class AuthService {
         codeAutoRetrievalTimeout: (verificationId) {},
       );
     } on FirebaseAuthException catch (e) {
-      throw Exception('phone auth is intrrupted$e');
+      throw Exception('phone auth is failed$e');
     }
   }
 
@@ -54,7 +54,7 @@ class AuthService {
         onSuccess();
       }
     } on FirebaseAuthException catch (e) {
-      throw Exception('phone auth is intrrupted$e');
+      throw Exception('phone auth is failed$e');
     }
   }
 
