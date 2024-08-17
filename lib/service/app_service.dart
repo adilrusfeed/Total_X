@@ -41,7 +41,6 @@ class DataService {
     required String age,
     required String phoneNumber,
     required File imageFile,
-    
   }) async {
     try {
       String imageUrl = await uploadImage(imageFile);
@@ -54,6 +53,14 @@ class DataService {
       await firestore.collection('users_collection').doc().set(user.toJson());
     } catch (e) {
       throw Exception('Error adding user to Firestore: $e');
+    }
+  }
+
+  Future<void> deleteUser(String documentId) async {
+    try {
+      await firestore.collection('users_collection').doc(documentId).delete();
+    } catch (e) {
+      throw Exception('Error deleting user from Firestore: $e');
     }
   }
 }

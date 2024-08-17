@@ -48,7 +48,7 @@ class DataController extends ChangeNotifier {
       users.listen((snaphot) {
         final users = snaphot.docs.map((doc) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-          return AppModel.fromJson(data);
+          return AppModel.fromJson(data, doc.id);
         }).toList();
 
         hasMore = users.length == pageSize;
@@ -84,14 +84,10 @@ class DataController extends ChangeNotifier {
     if (query.isEmpty) {
       filteredUsers = List.from(allUsers);
     } else {
-      // filteredUsers = allUsers
-      //     .where(
-      //         (user) => user.name!.toLowerCase().contains(query.toLowerCase()))
-      //     .toList();
       filteredUsers = allUsers.where((user) {
         final lowerQuery = query.toLowerCase();
-        return (user.name?.toLowerCase().contains(lowerQuery)??false) || 
-        (user.phoneNumber?.toLowerCase().contains(lowerQuery)?? false);
+        return (user.name?.toLowerCase().contains(lowerQuery) ?? false) ||
+            (user.phoneNumber?.toLowerCase().contains(lowerQuery) ?? false);
       }).toList();
     }
     notifyListeners();
@@ -104,7 +100,8 @@ class DataController extends ChangeNotifier {
     required File imageFile,
   }) async {
     try {
-      await dataService.addUser(name: name, age: age,phoneNumber: phoneNumber, imageFile: imageFile);
+      await dataService.addUser(
+          name: name, age: age, phoneNumber: phoneNumber, imageFile: imageFile);
       refreshUsers();
     } catch (e) {
       log('Error adding user to Firestore: $e');
@@ -140,6 +137,15 @@ class DataController extends ChangeNotifier {
       isLoadingMore = true;
       await fetchUsers(isLoadMore: true);
       isLoadingMore = false;
+    }
+  }
+
+  Future<void> deleteUser(String documentId) async {
+    try {
+      await dataService.deleteUser(documentId);
+      refreshUsers();
+    } catch (e) {
+      log("Error deleting user: $e");
     }
   }
 }

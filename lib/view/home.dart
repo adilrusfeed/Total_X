@@ -100,10 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                           final user = homeController.filteredUsers[index];
                           return Card(
-                            elevation: 2,
+                            elevation: 3,
                             child: ListTile(
                               leading: CircleAvatar(
-                                radius: 35,
+                                radius: 30,
                                 backgroundImage: user.image != null
                                     ? NetworkImage(user.image!)
                                     : const AssetImage(
@@ -111,7 +111,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                         as ImageProvider,
                               ),
                               title: Text(user.name ?? ''),
-                              subtitle: Text(user.age ?? ''),
+                              subtitle: Text(
+                                  '${user.age ?? ''},${user.phoneNumber ?? ''}'),
+                                  trailing: IconButton(onPressed: (){
+                                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Delete User'),
+                            content: const Text('Are you sure you want to delete this user?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                  await homeController.deleteUser(user.id!); // Make sure 'id' is available in the model
+                                },
+                                child: const Text('Delete'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                                  }, icon: Icon(Icons.delete_outline_rounded,color: Colors.red,)),
                             ),
                           );
                         },
@@ -125,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActoionWidget(
-          nameController: nameController, ageController: ageController,phoneController: phoneController,),
+        nameController: nameController,
+        ageController: ageController,
+        phoneController: phoneController,
+      ),
     );
   }
 
