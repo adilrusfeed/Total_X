@@ -84,10 +84,15 @@ class DataController extends ChangeNotifier {
     if (query.isEmpty) {
       filteredUsers = List.from(allUsers);
     } else {
-      filteredUsers = allUsers
-          .where(
-              (user) => user.name!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      // filteredUsers = allUsers
+      //     .where(
+      //         (user) => user.name!.toLowerCase().contains(query.toLowerCase()))
+      //     .toList();
+      filteredUsers = allUsers.where((user) {
+        final lowerQuery = query.toLowerCase();
+        return (user.name?.toLowerCase().contains(lowerQuery)??false) || 
+        (user.phoneNumber?.toLowerCase().contains(lowerQuery)?? false);
+      }).toList();
     }
     notifyListeners();
   }
@@ -95,11 +100,11 @@ class DataController extends ChangeNotifier {
   Future<void> addUsersCollection({
     required String name,
     required String age,
+    required String phoneNumber,
     required File imageFile,
   }) async {
     try {
-      await dataService.addUserCollection(
-          name: name, age: age, imageFile: imageFile);
+      await dataService.addUser(name: name, age: age,phoneNumber: phoneNumber, imageFile: imageFile);
       refreshUsers();
     } catch (e) {
       log('Error adding user to Firestore: $e');

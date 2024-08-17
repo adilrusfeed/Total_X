@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool isLoadingMore = false;
 
@@ -32,19 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'Nilambur',
+          'Cochi',
+          style: TextStyle(color: Colors.white),
         ),
         leading: const Icon(
           Icons.location_on,
           color: Colors.white,
         ),
-        // ignore: prefer_const_literals_to_create_immutables
         actions: [
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(right: 10),
             child: InkWell(
-              onTap: () => AuthService().signOut(),
-              child: const Icon(Icons.logout, color: Colors.white)),
+                onTap: () => AuthService().signOut(),
+                child: const Icon(Icons.logout, color: Colors.white)),
           )
         ],
       ),
@@ -60,11 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Users Lists',
+              '  Users Lists',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 17,
-                  color: Colors.grey[500]),
+                  color: const Color.fromARGB(255, 1, 1, 1)),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -105,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 radius: 35,
                                 backgroundImage: user.image != null
                                     ? NetworkImage(user.image!)
-                                    : const AssetImage('assets/profile_icon.png')
+                                    : const AssetImage(
+                                            'assets/profile_icon.png')
                                         as ImageProvider,
                               ),
                               title: Text(user.name ?? ''),
@@ -122,7 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActoionWidget(nameController: nameController, ageController: ageController),
+      floatingActionButton: FloatingActoionWidget(
+          nameController: nameController, ageController: ageController,phoneController: phoneController,),
     );
   }
 
@@ -147,5 +150,3 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 }
-
-

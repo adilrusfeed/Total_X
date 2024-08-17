@@ -10,12 +10,14 @@ class AddDialogueBox extends StatelessWidget {
     super.key,
     required this.nameController,
     required this.ageController,
-    required this.homePro,
+    required this.phoneController,
+    required this.homeProvider,
   });
 
   final TextEditingController nameController;
   final TextEditingController ageController;
-  final DataController homePro;
+  final TextEditingController phoneController;
+  final DataController homeProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,9 @@ class AddDialogueBox extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 40,
-                backgroundImage: homePro.selectedImage != null
-                    ? FileImage(File(homePro.selectedImage?.path ?? ''))
-                    : const AssetImage('assets/profile_icon.png') as ImageProvider,
+                backgroundImage: homeProvider.selectedImage != null
+                    ? FileImage(File(homeProvider.selectedImage?.path ?? ''))
+                    : const AssetImage('assets/download.png') as ImageProvider,
               ),
               InkWell(
                 onTap: () {
@@ -47,13 +49,13 @@ class AddDialogueBox extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  homePro.pickImage(ImageSource.camera);
+                                  homeProvider.pickImage(ImageSource.camera);
                                 },
                                 child: const Icon(Icons.camera_alt_outlined),
                               ),
                               InkWell(
                                 onTap: () {
-                                  homePro.pickImage(ImageSource.gallery);
+                                  homeProvider.pickImage(ImageSource.gallery);
                                 },
                                 child: const Icon(Icons.image_outlined),
                               ),
@@ -101,21 +103,23 @@ class AddDialogueBox extends StatelessWidget {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.blue)),
+                  backgroundColor: WidgetStateProperty.all(
+                      const Color.fromARGB(255, 243, 33, 33))),
               onPressed: () {
-                if (homePro.selectedImage == null) {
+                if (homeProvider.selectedImage == null) {
                   return;
-                }else{
-                homePro.addUsersCollection(
-                  name: nameController.text,
-                  age: ageController.text,
-                  imageFile: homePro.selectedImage!,
-                );
-                nameController.clear();
-                ageController.clear();
-                homePro.selectedImage==null;
+                } else {
+                  homeProvider.addUsersCollection(
+                    name: nameController.text,
+                    age: ageController.text,
+                    phoneNumber: phoneController.text,
+                    imageFile: homeProvider.selectedImage!,
+                  );
+                  nameController.clear();
+                  ageController.clear();
+                  phoneController.clear();
+                  homeProvider.selectedImage == null;
                 }
-
 
                 Navigator.pop(context);
               },

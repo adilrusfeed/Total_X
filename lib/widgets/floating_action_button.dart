@@ -9,10 +9,12 @@ class FloatingActoionWidget extends StatelessWidget {
     super.key,
     required this.nameController,
     required this.ageController,
+    required this.phoneController,
   });
 
   final TextEditingController nameController;
   final TextEditingController ageController;
+  final TextEditingController phoneController;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,8 @@ class FloatingActoionWidget extends StatelessWidget {
               builder: (context, homePro, child) => AddDialogueBox(
                 nameController: nameController,
                 ageController: ageController,
-                homePro: homePro,
+                phoneController: phoneController,
+                homeProvider: homePro,
               ),
             );
           },

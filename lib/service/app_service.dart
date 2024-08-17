@@ -11,8 +11,9 @@ class DataService {
     DocumentSnapshot? lastDocument,
     int pageSize = 10,
   }) {
-    Query query = firestore.collection('users_collection')
-        .orderBy('name') 
+    Query query = firestore
+        .collection('users_collection')
+        .orderBy('name')
         .limit(pageSize);
 
     if (lastDocument != null) {
@@ -35,16 +36,19 @@ class DataService {
     }
   }
 
-  Future<void> addUserCollection({
+  Future<void> addUser({
     required String name,
     required String age,
+    required String phoneNumber,
     required File imageFile,
+    
   }) async {
     try {
       String imageUrl = await uploadImage(imageFile);
       AppModel user = AppModel(
         name: name,
         age: age,
+        phoneNumber: phoneNumber,
         image: imageUrl,
       );
       await firestore.collection('users_collection').doc().set(user.toJson());
@@ -52,8 +56,4 @@ class DataService {
       throw Exception('Error adding user to Firestore: $e');
     }
   }
-
 }
-
-
-

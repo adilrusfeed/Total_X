@@ -30,7 +30,7 @@ class SearchFilterWidget extends StatelessWidget {
                   Icons.search_sharp,
                   color: Colors.grey,
                 ),
-                hintText: 'Search by name',
+                hintText: 'Search by name or number',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -45,9 +45,9 @@ class SearchFilterWidget extends StatelessWidget {
                   homeController.setFilter(value);
                 },
                 itemBuilder: (context) => [
-                  buildPopupMenuItem('all', 'All', context),
-                  buildPopupMenuItem('elder', 'Elder', context),
-                  buildPopupMenuItem('younger', 'Younger', context),
+                  sortItem('all', 'All', context),
+                  sortItem('elder', 'Elder', context),
+                  sortItem('younger', 'Younger', context),
                 ],
                 child: Container(
                   decoration: BoxDecoration(
@@ -57,7 +57,7 @@ class SearchFilterWidget extends StatelessWidget {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Icon(
-                      Icons.menu,
+                      Icons.filter_list_rounded,
                       color: Colors.white,
                     ),
                   ),
